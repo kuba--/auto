@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/civil.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://src/auto.gd" type="Script" id=2]
+
+[node name="Auto" type="AnimatedSprite"]
+frames = ExtResource( 1 )
+animation = "e"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 3.0
+drag_margin_left = 0.3
+drag_margin_top = 0.3
+drag_margin_right = 0.3
+drag_margin_bottom = 0.3
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_completed"]

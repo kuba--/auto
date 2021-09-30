@@ -1,0 +1,182 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/ui/future.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/ui/score.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/timer.png" type="Texture" id=3]
+[ext_resource path="res://src/play.gd" type="Script" id=4]
+[ext_resource path="res://src/city.tres" type="TileSet" id=5]
+[ext_resource path="res://src/city.gd" type="Script" id=6]
+[ext_resource path="res://assets/ui/left_light.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/up_light.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/down_light.png" type="Texture" id=9]
+[ext_resource path="res://assets/ui/right_light.png" type="Texture" id=10]
+[ext_resource path="res://assets/ui/right_dark.png" type="Texture" id=11]
+[ext_resource path="res://assets/ui/down_dark.png" type="Texture" id=12]
+[ext_resource path="res://assets/ui/left_dark.png" type="Texture" id=13]
+[ext_resource path="res://assets/ui/up_dark.png" type="Texture" id=14]
+[ext_resource path="res://src/civil.tres" type="SpriteFrames" id=15]
+[ext_resource path="res://src/auto.gd" type="Script" id=16]
+
+[sub_resource type="DynamicFont" id=1]
+size = 86
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 86
+font_data = ExtResource( 1 )
+
+[node name="Play" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TimerContainer" type="HBoxContainer" parent="CanvasLayer"]
+margin_top = 10.0
+margin_right = 302.0
+margin_bottom = 128.0
+custom_constants/separation = 30
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimerIcon" type="TextureRect" parent="CanvasLayer/TimerContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+texture = ExtResource( 3 )
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer/TimerContainer"]
+margin_left = 158.0
+margin_top = 15.0
+margin_right = 302.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
+text = "45"
+valign = 1
+
+[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -454.0
+margin_top = 10.0
+margin_bottom = 128.0
+grow_horizontal = 0
+custom_constants/separation = 30
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreIcon" type="TextureRect" parent="CanvasLayer/ScoreContainer"]
+margin_left = 224.0
+margin_right = 352.0
+margin_bottom = 128.0
+texture = ExtResource( 2 )
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/ScoreContainer"]
+margin_left = 382.0
+margin_top = 15.0
+margin_right = 454.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
+text = "0"
+align = 2
+valign = 1
+
+[node name="ControlContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -640.0
+margin_top = -90.0
+margin_right = 640.0
+custom_constants/separation = 312
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
+margin_left = 12.0
+margin_right = 92.0
+margin_bottom = 90.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 13 )
+
+[node name="UpButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
+margin_left = 404.0
+margin_right = 484.0
+margin_bottom = 90.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 14 )
+
+[node name="DownButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
+margin_left = 796.0
+margin_right = 876.0
+margin_bottom = 90.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 12 )
+
+[node name="RightButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
+margin_left = 1188.0
+margin_right = 1268.0
+margin_bottom = 90.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 11 )
+
+[node name="City" type="Node2D" parent="."]
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="TileMap" type="TileMap" parent="City"]
+mode = 1
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 128, 64 )
+compatibility_mode = true
+format = 1
+tile_data = PoolIntArray( 0, 15, 0 )
+
+[node name="Auto" type="AnimatedSprite" parent="."]
+frames = ExtResource( 15 )
+animation = "e"
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Tween" type="Tween" parent="Auto"]
+
+[node name="Camera" type="Camera2D" parent="Auto"]
+current = true
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 3.0
+drag_margin_left = 0.3
+drag_margin_top = 0.3
+drag_margin_right = 0.3
+drag_margin_bottom = 0.3
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/ControlContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/ControlContainer/UpButton" to="." method="_on_UpButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/ControlContainer/DownButton" to="." method="_on_DownButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/ControlContainer/RightButton" to="." method="_on_RightButton_pressed"]
+[connection signal="tile_set" from="City" to="." method="_on_City_tile_set"]
+[connection signal="tween_completed" from="Auto/Tween" to="Auto" method="_on_Tween_completed"]
