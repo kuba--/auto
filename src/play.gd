@@ -10,12 +10,16 @@ onready var _timer: Timer = $Timer
 # UI
 onready var _timer_label: Label = $CanvasLayer/TimerContainer/TimerLabel
 onready var _score_label: Label = $CanvasLayer/ScoreContainer/ScoreLabel
+onready var _control: HBoxContainer = $CanvasLayer/ControlContainer
 
 # Merged scenes
 onready var _city: City = $City
 onready var _auto: Auto = $Auto
 
+
 func _ready():
+    _control.visible = OS.has_touchscreen_ui_hint()
+    
     _auto.map_to_world = funcref(_city, "map_to_world")
     _auto.can_move = funcref(_city, "has_tile")
     _auto.position = _city.map_to_world(Vector2.ZERO)

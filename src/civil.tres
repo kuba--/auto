@@ -7,9 +7,9 @@
 
 [resource]
 animations = [ {
-"frames": [ ExtResource( 1 ) ],
+"frames": [ ExtResource( 3 ) ],
 "loop": false,
-"name": "e",
+"name": "w",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
@@ -22,8 +22,8 @@ animations = [ {
 "name": "s",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 1 ) ],
 "loop": false,
-"name": "w",
+"name": "e",
 "speed": 5.0
 } ]

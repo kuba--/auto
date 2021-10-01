@@ -93,46 +93,43 @@ align = 2
 valign = 1
 
 [node name="ControlContainer" type="HBoxContainer" parent="CanvasLayer"]
-anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -640.0
 margin_top = -90.0
-margin_right = 640.0
-custom_constants/separation = 312
+custom_constants/separation = 240
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LeftButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
-margin_left = 12.0
-margin_right = 92.0
+margin_left = 20.0
+margin_right = 100.0
 margin_bottom = 90.0
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 7 )
 texture_pressed = ExtResource( 13 )
 
 [node name="UpButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
-margin_left = 404.0
-margin_right = 484.0
+margin_left = 340.0
+margin_right = 420.0
 margin_bottom = 90.0
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 14 )
 
 [node name="DownButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
-margin_left = 796.0
-margin_right = 876.0
+margin_left = 660.0
+margin_right = 740.0
 margin_bottom = 90.0
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 9 )
 texture_pressed = ExtResource( 12 )
 
 [node name="RightButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
-margin_left = 1188.0
-margin_right = 1268.0
+margin_left = 980.0
+margin_right = 1060.0
 margin_bottom = 90.0
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 10 )
