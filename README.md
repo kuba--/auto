@@ -12,6 +12,10 @@ The tricky part can be steering, because you steer the car as a driver (like in 
 
 ![truck](screenshots/truck.png)
 
+### Demo
+
+Playable demo is on _github pages_: [https://kuba--.github.io/auto/](https://kuba--.github.io/auto/)
+
 ### Credits
 
 I could not create this game without great free assets.
