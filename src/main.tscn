@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://assets/ui/score.png" type="Texture" id=1]
 [ext_resource path="res://assets/ui/future.ttf" type="DynamicFontData" id=2]
@@ -21,6 +21,9 @@
 [ext_resource path="res://assets/truck/icon_mono.png" type="Texture" id=19]
 [ext_resource path="res://assets/police/icon.png" type="Texture" id=20]
 [ext_resource path="res://assets/garbage/icon_flip.png" type="Texture" id=21]
+[ext_resource path="res://assets/ui/best.png" type="Texture" id=22]
+[ext_resource path="res://assets/ui/touch_disabled.png" type="Texture" id=23]
+[ext_resource path="res://assets/ui/touch_enabled.png" type="Texture" id=24]
 
 [sub_resource type="DynamicFont" id=1]
 size = 96
@@ -43,14 +46,30 @@ margin_right = 1080.0
 margin_bottom = 600.0
 custom_constants/separation = 100
 
-[node name="LogoLabel" type="Label" parent="VBoxContainer"]
+[node name="LogoContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 1080.0
 margin_bottom = 108.0
+alignment = 1
+
+[node name="LogoLabel" type="Label" parent="VBoxContainer/LogoContainer"]
+margin_left = 346.0
+margin_right = 666.0
+margin_bottom = 108.0
+size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "AUTO"
 align = 1
+
+[node name="TouchButton" type="TextureButton" parent="VBoxContainer/LogoContainer"]
+margin_left = 670.0
+margin_right = 734.0
+margin_bottom = 64.0
+size_flags_vertical = 0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 24 )
+texture_pressed = ExtResource( 23 )
 
 [node name="ButtonContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 208.0
@@ -112,23 +131,54 @@ texture_hover = ExtResource( 12 )
 margin_top = 436.0
 margin_right = 1080.0
 margin_bottom = 564.0
-custom_constants/separation = 50
+custom_constants/separation = 250
 alignment = 1
 
-[node name="ScoreIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
-margin_left = 415.0
-margin_right = 543.0
+[node name="BestScoreContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 140.0
+margin_right = 440.0
 margin_bottom = 128.0
-texture = ExtResource( 1 )
+custom_constants/separation = 50
 
-[node name="ScoreLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_left = 593.0
+[node name="BestScoreIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer/BestScoreContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+texture = ExtResource( 22 )
+
+[node name="BestScoreLabel" type="Label" parent="VBoxContainer/HBoxContainer/BestScoreContainer"]
+margin_left = 178.0
 margin_top = 15.0
-margin_right = 665.0
+margin_right = 250.0
 margin_bottom = 113.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
 text = "0"
+
+[node name="BestAutoIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer/BestScoreContainer"]
+margin_left = 300.0
+margin_right = 300.0
+margin_bottom = 128.0
+
+[node name="ScoreContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 690.0
+margin_right = 940.0
+margin_bottom = 128.0
+custom_constants/separation = 50
+
+[node name="ScoreIcon" type="TextureRect" parent="VBoxContainer/HBoxContainer/ScoreContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+texture = ExtResource( 1 )
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer/HBoxContainer/ScoreContainer"]
+margin_left = 178.0
+margin_top = 15.0
+margin_right = 250.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
+text = "0"
+[connection signal="pressed" from="VBoxContainer/LogoContainer/TouchButton" to="." method="_on_TouchButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/TaxiButton" to="." method="_on_TaxiButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/TruckButton" to="." method="_on_TruckButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/PoliceButton" to="." method="_on_PoliceButton_pressed"]

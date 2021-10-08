@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/ui/future.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/ui/score.png" type="Texture" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://assets/ui/up_dark.png" type="Texture" id=14]
 [ext_resource path="res://src/civil.tres" type="SpriteFrames" id=15]
 [ext_resource path="res://src/auto.gd" type="Script" id=16]
+[ext_resource path="res://src/control.gd" type="Script" id=17]
 
 [sub_resource type="DynamicFont" id=1]
 size = 86
@@ -92,46 +93,71 @@ text = "0"
 align = 2
 valign = 1
 
-[node name="ControlContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="Control" type="HBoxContainer" parent="CanvasLayer"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -90.0
-custom_constants/separation = 240
+margin_left = 10.0
+margin_top = -316.0
+margin_right = -10.0
+margin_bottom = -10.0
 alignment = 1
+script = ExtResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LeftButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
-margin_left = 20.0
-margin_right = 100.0
-margin_bottom = 90.0
-shortcut_in_tooltip = false
-texture_normal = ExtResource( 7 )
-texture_pressed = ExtResource( 13 )
+[node name="SwipeTimer" type="Timer" parent="CanvasLayer/Control"]
+wait_time = 0.2
+one_shot = true
 
-[node name="UpButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
-margin_left = 340.0
-margin_right = 420.0
-margin_bottom = 90.0
+[node name="UpDownContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+margin_right = 128.0
+margin_bottom = 306.0
+size_flags_horizontal = 2
+custom_constants/separation = 50
+
+[node name="UpButton" type="TextureButton" parent="CanvasLayer/Control/UpDownContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
 shortcut_in_tooltip = false
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 14 )
 
-[node name="DownButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
-margin_left = 660.0
-margin_right = 740.0
-margin_bottom = 90.0
-shortcut_in_tooltip = false
+[node name="DownButton" type="TextureButton" parent="CanvasLayer/Control/UpDownContainer"]
+margin_top = 178.0
+margin_right = 128.0
+margin_bottom = 306.0
 texture_normal = ExtResource( 9 )
 texture_pressed = ExtResource( 12 )
 
-[node name="RightButton" type="TextureButton" parent="CanvasLayer/ControlContainer"]
-margin_left = 980.0
+[node name="LeftRightContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+margin_left = 754.0
+margin_top = 178.0
 margin_right = 1060.0
-margin_bottom = 90.0
-shortcut_in_tooltip = false
+margin_bottom = 306.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/LeftRightContainer"]
+margin_right = 306.0
+margin_bottom = 128.0
+custom_constants/separation = 50
+
+[node name="LeftButton" type="TextureButton" parent="CanvasLayer/Control/LeftRightContainer/HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightButton" type="TextureButton" parent="CanvasLayer/Control/LeftRightContainer/HBoxContainer"]
+margin_left = 178.0
+margin_right = 306.0
+margin_bottom = 128.0
 texture_normal = ExtResource( 10 )
 texture_pressed = ExtResource( 11 )
 
@@ -171,9 +197,14 @@ drag_margin_top = 0.3
 drag_margin_right = 0.3
 drag_margin_bottom = 0.3
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="pressed" from="CanvasLayer/ControlContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/ControlContainer/UpButton" to="." method="_on_UpButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/ControlContainer/DownButton" to="." method="_on_DownButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/ControlContainer/RightButton" to="." method="_on_RightButton_pressed"]
+[connection signal="on_control_cancel" from="CanvasLayer/Control" to="." method="_on_Control_cancel"]
+[connection signal="on_control_down" from="CanvasLayer/Control" to="." method="_on_Control_down"]
+[connection signal="on_control_left" from="CanvasLayer/Control" to="." method="_on_Control_left"]
+[connection signal="on_control_right" from="CanvasLayer/Control" to="." method="_on_Control_right"]
+[connection signal="on_control_up" from="CanvasLayer/Control" to="." method="_on_Control_up"]
+[connection signal="pressed" from="CanvasLayer/Control/UpDownContainer/UpButton" to="CanvasLayer/Control" method="_on_UpButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/UpDownContainer/DownButton" to="CanvasLayer/Control" method="_on_DownButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/LeftRightContainer/HBoxContainer/LeftButton" to="CanvasLayer/Control" method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/LeftRightContainer/HBoxContainer/RightButton" to="CanvasLayer/Control" method="_on_RightButton_pressed"]
 [connection signal="tile_set" from="City" to="." method="_on_City_tile_set"]
 [connection signal="tween_completed" from="Auto/Tween" to="Auto" method="_on_Tween_completed"]

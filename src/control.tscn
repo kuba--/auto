@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/control.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui/left_dark.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/up_dark.png" type="Texture" id=3]
+[ext_resource path="res://assets/ui/right_light.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/down_light.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/left_light.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/up_light.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/right_dark.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/down_dark.png" type="Texture" id=9]
+
+[node name="Control" type="HBoxContainer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -316.0
+margin_right = -10.0
+margin_bottom = -10.0
+alignment = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SwipeTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="UpDownContainer" type="VBoxContainer" parent="."]
+margin_right = 128.0
+margin_bottom = 306.0
+size_flags_horizontal = 2
+custom_constants/separation = 50
+
+[node name="UpButton" type="TextureButton" parent="UpDownContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 3 )
+
+[node name="DownButton" type="TextureButton" parent="UpDownContainer"]
+margin_top = 178.0
+margin_right = 128.0
+margin_bottom = 306.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 9 )
+
+[node name="LeftRightContainer" type="VBoxContainer" parent="."]
+margin_left = 754.0
+margin_top = 178.0
+margin_right = 1060.0
+margin_bottom = 306.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LeftRightContainer"]
+margin_right = 306.0
+margin_bottom = 128.0
+custom_constants/separation = 50
+
+[node name="LeftButton" type="TextureButton" parent="LeftRightContainer/HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightButton" type="TextureButton" parent="LeftRightContainer/HBoxContainer"]
+margin_left = 178.0
+margin_right = 306.0
+margin_bottom = 128.0
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 8 )
+[connection signal="pressed" from="UpDownContainer/UpButton" to="." method="_on_UpButton_pressed"]
+[connection signal="pressed" from="UpDownContainer/DownButton" to="." method="_on_DownButton_pressed"]
+[connection signal="pressed" from="LeftRightContainer/HBoxContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="LeftRightContainer/HBoxContainer/RightButton" to="." method="_on_RightButton_pressed"]

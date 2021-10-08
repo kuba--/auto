@@ -1,5 +1,7 @@
 .DS_Store
 *.keystore
+*.apk
+build/
 
 # Godot-specific ignores
 .import/

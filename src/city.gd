@@ -10,7 +10,7 @@ enum {
     W = 1 << 3
 }
 
-const DirVal: Dictionary = {
+const Dir2Val: Dictionary = {
     Vector2.ZERO:  0,
     Vector2.UP:    N,
     Vector2.DOWN:  S,
@@ -18,7 +18,7 @@ const DirVal: Dictionary = {
     Vector2.RIGHT: E,
 }
 
-const ValDir: Dictionary = {
+const Val2Dir: Dictionary = {
     0: Vector2.ZERO,
     N: Vector2.UP,
     S: Vector2.DOWN,
@@ -31,6 +31,7 @@ const N_TILE_TYPES = 16
 export(Vector2) var auto_offset: Vector2 = Vector2(0, 32)
 
 onready var _map: TileMap = $TileMap
+
 
 func _init():
     randomize()
@@ -51,8 +52,8 @@ func get_or_set_tile(pos: Vector2, dir: Vector2) -> int:
     if not tile_exists:
         tile_idx = _rand_tile(tile_pos)
 
-    var val = (tile_idx & DirVal[-dir])
-    var is_ok = (dir == -ValDir[val])
+    var val = (tile_idx & Dir2Val[-dir])
+    var is_ok = (dir == -Val2Dir[val])
     if not is_ok:
         return 0
     if not tile_exists:
@@ -62,20 +63,22 @@ func get_or_set_tile(pos: Vector2, dir: Vector2) -> int:
 
     return tile_idx
 
+
 func has_tile(pos: Vector2, dir: Vector2) -> bool:
     return get_or_set_tile(pos, dir) > 0
+
 
 func _rand_tile(pos: Vector2) -> int:
     var tiles: Array = []
     for i in range(N_TILE_TYPES):
         var is_ok: bool = true
-        for dir in DirVal:
+        for dir in Dir2Val:
             var tile_idx: int = _map.get_cellv(pos + dir)
             if tile_idx == TileMap.INVALID_CELL:
                 continue
-            var val  = (i & DirVal[dir])
-            var not_val = (tile_idx & DirVal[-dir])
-            is_ok = (val == DirVal[-ValDir[not_val]])
+            var val  = (i & Dir2Val[dir])
+            var not_val = (tile_idx & Dir2Val[-dir])
+            is_ok = (val == Dir2Val[-Val2Dir[not_val]])
             if not is_ok:
                 break
         if is_ok:

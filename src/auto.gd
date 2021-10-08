@@ -7,7 +7,7 @@ const MIN_INTERPOLATE_DURATION := 0.5
 const INTERPOLATE_TRANSITION   := Tween.TRANS_LINEAR
 const INTERPOLATE_EASE         := Tween.EASE_OUT_IN
 
-const DirAnim: Dictionary = {
+const Dir2Anim: Dictionary = {
     Vector2.UP:    "n",
     Vector2.DOWN:  "s",
     Vector2.LEFT:  "w",
@@ -29,7 +29,7 @@ func _ready():
 
 
 func move() -> void:
-    play(DirAnim[_dir])
+    play(Dir2Anim[_dir])
 
     if can_move != null && not (can_move.call_func(_pos, _dir) as bool):
         stop()
@@ -40,8 +40,10 @@ func move() -> void:
 
     _pos += _dir
     var world_pos = map_to_world.call_func(_pos) as Vector2 if map_to_world != null else _pos
-    assert(_tween.interpolate_property(self, "position", null, world_pos, _dt, INTERPOLATE_TRANSITION, INTERPOLATE_EASE))
-    assert(_tween.start())
+    if not _tween.interpolate_property(self, "position", null, world_pos, _dt, INTERPOLATE_TRANSITION, INTERPOLATE_EASE):
+        printerr("interpolate_property", world_pos, _dt, INTERPOLATE_TRANSITION, INTERPOLATE_EASE)
+    if not _tween.start():
+        printerr(_tween, "start")
     _is_moving = true
 
 
@@ -50,7 +52,8 @@ func start() -> void:
         move()
 
 func stop() -> void:
-    assert(_tween.stop_all())
+    if not _tween.stop_all():
+        printerr(_tween, "stop_all")
     _is_moving = false
 
 
