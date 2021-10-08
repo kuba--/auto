@@ -17,4 +17,5 @@ The tricky part can be steering, because you steer the car as a driver (like in 
 I could not create this game without great free assets.
 - UI stuff (free icons, buttons, etc.) downloaded from [https://www.flaticon.com](https://www.flaticon.com).
 - Other game assets (like fonts, car sprites and city textures) downloaded from [https://kenney.nl](https://kenney.nl).
+
 Thank you !
