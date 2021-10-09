@@ -18,7 +18,9 @@ Playable demo is on _github pages_: [https://kuba--.github.io/auto/](https://kub
 
 ### Credits
 
-I could not create this game without great free assets.
+The idea was heavily inspired by post [Procedural Generation in Godot - Part 3: Tile-based Infinite Worlds](https://kidscancode.org/blog/2018/09/godot3_procgen3/).
+
+But I could not create this game without great free assets.
 - UI stuff (free icons, buttons, etc.) downloaded from [https://www.flaticon.com](https://www.flaticon.com).
 - Other game assets (like fonts, car sprites and city textures) downloaded from [https://kenney.nl](https://kenney.nl).
 

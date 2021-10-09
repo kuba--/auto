@@ -67,6 +67,7 @@ func stop() -> void:
     _auto.stop()
     _control.stop()
     _timer.stop()
+    _city.disconnect("tile_set", self, "_on_City_tile_set")
 
 
 func quit() -> void:
