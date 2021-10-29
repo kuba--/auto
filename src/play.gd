@@ -16,7 +16,6 @@ onready var _control: HBoxContainer = $CanvasLayer/Control
 onready var _city: City = $City
 onready var _auto: Auto = $Auto
 
-
 func _ready():
     _auto.map_to_world = funcref(_city, "map_to_world")
     _auto.can_move = funcref(_city, "has_tile")
@@ -24,26 +23,32 @@ func _ready():
     Global.play_score = 0
     _score_label.text = str(Global.play_score)
     _timer_label.text = str(timeout)
-    _timer.start(-1)
+    _timer.set_paused(true)
+    _timer.start(-1.0)
 
 
 func _on_Control_left():
+    _timer.set_paused(false)
     _auto.turn_left()
     _auto.start()
 
 func _on_Control_right():
+    _timer.set_paused(false)
     _auto.turn_right()
     _auto.start()
 
 func _on_Control_down():
+    _timer.set_paused(false)
     _auto.turn_u()
     _auto.start()
 
 func _on_Control_up():
+    _timer.set_paused(false)
     _auto.start()
 
 func _on_Control_cancel():
     _auto.stop()
+    _timer.set_paused(true)
 
 
 func _on_City_tile_set(_pos: Vector2, _idx: int):
@@ -63,15 +68,16 @@ func _on_Timer_timeout():
             Global.play_best_auto_icon = Global.auto_icon
 
 
-func stop() -> void:
+func stop():
     _auto.stop()
     _control.stop()
     _timer.stop()
     _city.disconnect("tile_set", self, "_on_City_tile_set")
 
 
-func quit() -> void:
+func quit():
     queue_free()
     var err := get_tree().change_scene("res://src/main.tscn")
     if err != OK:
         printerr("change_scene", "res://src/main.tscn", err)
+

@@ -69,7 +69,7 @@ func _input_screen_touch(event: InputEventScreenTouch):
 func stop():
     _is_stopped = true
 
-func quit() -> void:
+func quit():
     queue_free()
     var err := get_tree().change_scene("res://src/main.tscn")
     if err != OK:
@@ -90,7 +90,4 @@ func _on_DownButton_pressed():
 
 func _on_UpButton_pressed():
     emit_signal("on_control_up")
-
-
-
 
