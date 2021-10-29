@@ -28,7 +28,7 @@ func _ready():
     set_sprite_frames(load(Global.auto_sprite))
 
 
-func move() -> void:
+func move():
     play(Dir2Anim[_dir])
 
     if can_move != null && not (can_move.call_func(_pos, _dir) as bool):
@@ -47,23 +47,23 @@ func move() -> void:
     _is_moving = true
 
 
-func start() -> void:
+func start():
     if not _is_moving:
         move()
 
-func stop() -> void:
+func stop():
     if not _tween.stop_all():
         printerr(_tween, "stop_all")
     _is_moving = false
 
 
-func turn_left() -> void:
+func turn_left():
     _dir = Vector2(_dir.y, - _dir.x)
 
-func turn_right() -> void:
+func turn_right():
     _dir = Vector2(-_dir.y, _dir.x)
 
-func turn_u() -> void:
+func turn_u():
     _dir = Vector2(-_dir.x, -_dir.y)
 
 
