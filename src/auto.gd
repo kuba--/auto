@@ -3,7 +3,7 @@ extends AnimatedSprite
 # Generic implementation for all vehicles.
 
 const INTERPOLATE_DURATION     := 1.0
-const MIN_INTERPOLATE_DURATION := 0.5
+const MIN_INTERPOLATE_DURATION := 0.49
 const INTERPOLATE_TRANSITION   := Tween.TRANS_LINEAR
 const INTERPOLATE_EASE         := Tween.EASE_OUT_IN
 

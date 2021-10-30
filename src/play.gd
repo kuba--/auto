@@ -2,7 +2,7 @@ class_name Play
 extends Control
 
 
-# play_timeout is the number of seconds, we gonna play.
+# Play timeout stands for number of seconds, we gonna play.
 export(int) var timeout = 45
 
 onready var _timer: Timer = $Timer
@@ -25,7 +25,6 @@ func _ready():
     _timer_label.text = str(timeout)
     _timer.set_paused(true)
     _timer.start(-1.0)
-
 
 func _on_Control_left():
     _timer.set_paused(false)
@@ -50,16 +49,14 @@ func _on_Control_cancel():
     _auto.stop()
     _timer.set_paused(true)
 
-
 func _on_City_tile_set(_pos: Vector2, _idx: int):
     Global.play_score += 1
     _score_label.text = str(Global.play_score)
 
-
 func _on_Timer_timeout():
     var t := int(_timer_label.text) - 1
     _timer_label.text = str(t)
-    if t == 0:
+    if (t == 0) or (not _city.has_exits()):
         stop()
         _timer_label.set("custom_colors/font_color",Color.lightcoral)
         _score_label.set("custom_colors/font_color",Color.lightsteelblue)

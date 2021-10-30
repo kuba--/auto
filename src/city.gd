@@ -30,28 +30,35 @@ const N_TILE_TYPES = 16
 
 export(Vector2) var auto_offset: Vector2 = Vector2(0, 32)
 
+var _n_exits: int = 0
 onready var _map: TileMap = $TileMap
-
 
 func _init():
     randomize()
 
+func _ready():
+    for v in _map.get_used_cells():
+        var tile_idx: int = _map.get_cellv(v)
+        for val in Val2Dir:
+            if ((val > 0) and (tile_idx & val == val)
+                and (_map.get_cellv(v + Val2Dir[val]) == TileMap.INVALID_CELL)):
+                _n_exits += 1
 
 func map_to_world(pos: Vector2) -> Vector2:
     return _map.map_to_world(pos) + auto_offset
 
-
 func world_to_map(pos: Vector2) -> Vector2:
     return _map.world_to_map(pos - auto_offset)
-
 
 func get_or_set_tile(pos: Vector2, dir: Vector2) -> int:
     var tile_pos: Vector2 = pos + dir
     var tile_idx: int = _map.get_cellv(tile_pos)
     var tile_exists: bool = (tile_idx != TileMap.INVALID_CELL)
+    var n_exits: int = _n_exits
     if not tile_exists:
-        tile_idx = _rand_tile(tile_pos)
-
+        var rand_tile := _rand_tile(tile_pos)
+        tile_idx = rand_tile[0]
+        n_exits = rand_tile[1]
     var val = (tile_idx & Dir2Val[-dir])
     var is_ok = (dir == -Val2Dir[val])
     if not is_ok:
@@ -60,16 +67,30 @@ func get_or_set_tile(pos: Vector2, dir: Vector2) -> int:
         # set random tile
         _map.set_cellv(tile_pos, tile_idx)
         emit_signal("tile_set", tile_pos, tile_idx)
-
+        _n_exits = n_exits
     return tile_idx
 
 
 func has_tile(pos: Vector2, dir: Vector2) -> bool:
     return get_or_set_tile(pos, dir) > 0
 
+func has_exits() -> bool:
+    return _n_exits > 0
 
-func _rand_tile(pos: Vector2) -> int:
+func _n_exits_with_tile(pos: Vector2, idx: int) -> int:
+    var n_exits: int = _n_exits
+    for val in Val2Dir:
+        if (val > 0) and (idx & val == val):
+            if (_map.get_cellv(pos + Val2Dir[val]) == TileMap.INVALID_CELL) :
+                n_exits += 1
+            else:
+                n_exits -= 1
+    return n_exits
+
+func _rand_tile(pos: Vector2) -> Array:
     var tiles: Array = []
+    var exits: Array = []
+    var deads: Array = []
     for i in range(N_TILE_TYPES):
         var is_ok: bool = true
         for dir in Dir2Val:
@@ -82,5 +103,13 @@ func _rand_tile(pos: Vector2) -> int:
             if not is_ok:
                 break
         if is_ok:
-            tiles.append(i)
-    return tiles[randi() % tiles.size()] if tiles.size() > 0 else 0
+            var n: int = _n_exits_with_tile(pos, i)
+            if n > 0:
+                tiles.append(i)
+                exits.append(n)
+            else:
+                deads.append(i)
+    if tiles.size() == 0:
+        return [deads[0], 0] if deads.size() > 0 else [0, 0]
+    var i: int = randi() % tiles.size()
+    return [tiles[i], exits[i]]
