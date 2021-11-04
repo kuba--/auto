@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/city.gd"
 }, {
+"base": "Sprite",
+"class": "Heart",
+"language": "GDScript",
+"path": "res://src/heart.gd"
+}, {
 "base": "MarginContainer",
 "class": "Main",
 "language": "GDScript",
@@ -32,6 +37,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Auto": "",
 "City": "",
+"Heart": "",
 "Main": "",
 "Play": ""
 }

@@ -8,7 +8,7 @@ The tricky part can be steering, because you steer the car as a driver (like in 
 
 ![main](screenshots/main.png)
 
-![taxi](screenshots/taxi.png)
+![ambulance](screenshots/ambulance.png)
 
 ![truck](screenshots/truck.png)
 

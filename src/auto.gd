@@ -2,10 +2,14 @@ class_name Auto
 extends AnimatedSprite
 # Generic implementation for all vehicles.
 
+signal on_move(pos)
+
 const INTERPOLATE_DURATION     := 1.0
 const MIN_INTERPOLATE_DURATION := 0.49
 const INTERPOLATE_TRANSITION   := Tween.TRANS_LINEAR
 const INTERPOLATE_EASE         := Tween.EASE_OUT_IN
+
+const OFFSET                   := Vector2(0, 32)
 
 const Dir2Anim: Dictionary = {
     Vector2.UP:    "n",
@@ -27,7 +31,6 @@ onready var _tween: Tween = $Tween
 func _ready():
     set_sprite_frames(load(Global.auto_sprite))
 
-
 func move():
     play(Dir2Anim[_dir])
 
@@ -39,7 +42,7 @@ func move():
         _dt -= get_process_delta_time()
 
     _pos += _dir
-    var world_pos = map_to_world.call_func(_pos) as Vector2 if map_to_world != null else _pos
+    var world_pos = map_to_world.call_func(_pos, OFFSET) as Vector2 if map_to_world != null else _pos
     if not _tween.interpolate_property(self, "position", null, world_pos, _dt, INTERPOLATE_TRANSITION, INTERPOLATE_EASE):
         printerr("interpolate_property", world_pos, _dt, INTERPOLATE_TRANSITION, INTERPOLATE_EASE)
     if not _tween.start():
@@ -66,8 +69,11 @@ func turn_right():
 func turn_u():
     _dir = Vector2(-_dir.x, -_dir.y)
 
+func map_position() -> Vector2:
+    return _pos
 
 func _on_Tween_completed(_object, _key):
     if not _is_moving:
         return
+    emit_signal("on_move", _pos)
     move()
