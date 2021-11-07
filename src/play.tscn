@@ -196,10 +196,12 @@ drag_margin_left = 0.3
 drag_margin_top = 0.3
 drag_margin_right = 0.3
 drag_margin_bottom = 0.3
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="on_control_cancel" from="CanvasLayer/Control" to="." method="_on_Control_cancel"]
 [connection signal="on_control_down" from="CanvasLayer/Control" to="." method="_on_Control_down"]
 [connection signal="on_control_left" from="CanvasLayer/Control" to="." method="_on_Control_left"]
+[connection signal="on_control_quit" from="CanvasLayer/Control" to="." method="_on_Control_quit"]
 [connection signal="on_control_right" from="CanvasLayer/Control" to="." method="_on_Control_right"]
 [connection signal="on_control_up" from="CanvasLayer/Control" to="." method="_on_Control_up"]
 [connection signal="pressed" from="CanvasLayer/Control/UpDownContainer/UpButton" to="CanvasLayer/Control" method="_on_UpButton_pressed"]
@@ -207,4 +209,5 @@ drag_margin_bottom = 0.3
 [connection signal="pressed" from="CanvasLayer/Control/LeftRightContainer/HBoxContainer/LeftButton" to="CanvasLayer/Control" method="_on_LeftButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/LeftRightContainer/HBoxContainer/RightButton" to="CanvasLayer/Control" method="_on_RightButton_pressed"]
 [connection signal="tile_set" from="City" to="." method="_on_City_tile_set"]
+[connection signal="on_move" from="Auto" to="." method="_on_Auto_move"]
 [connection signal="tween_completed" from="Auto/Tween" to="Auto" method="_on_Tween_completed"]

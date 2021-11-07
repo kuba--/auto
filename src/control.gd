@@ -5,6 +5,7 @@ signal on_control_right
 signal on_control_up
 signal on_control_down
 signal on_control_cancel
+signal on_control_quit
 
 const MaxDiag: float = 1.4
 
@@ -19,7 +20,7 @@ func _ready():
 func _input(event: InputEvent):
     if _is_stopped:
         if (event is InputEventKey) or (event is InputEventScreenTouch) or (event is InputEventMouseButton):
-            quit()
+            emit_signal("on_control_quit")
         return
 
     if (event is InputEventKey):
@@ -68,12 +69,6 @@ func _input_screen_touch(event: InputEventScreenTouch):
 
 func stop():
     _is_stopped = true
-
-func quit():
-    queue_free()
-    var err := get_tree().change_scene("res://src/main.tscn")
-    if err != OK:
-        printerr("change_scene", "res://src/main.tscn", err)
 
 
 func _on_LeftButton_pressed():

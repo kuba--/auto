@@ -178,6 +178,7 @@ margin_bottom = 113.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
 text = "0"
+
 [connection signal="pressed" from="VBoxContainer/LogoContainer/TouchButton" to="." method="_on_TouchButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/TaxiButton" to="." method="_on_TaxiButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/TruckButton" to="." method="_on_TruckButton_pressed"]

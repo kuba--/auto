@@ -28,7 +28,8 @@ const Val2Dir: Dictionary = {
 
 const N_TILE_TYPES = 16
 
-export(Vector2) var auto_offset: Vector2 = Vector2(0, 32)
+var Heart  = preload("res://src/heart.tscn")
+var _hearts: Dictionary = {}
 
 var _n_exits: int = 0
 onready var _map: TileMap = $TileMap
@@ -44,17 +45,17 @@ func _ready():
                 and (_map.get_cellv(v + Val2Dir[val]) == TileMap.INVALID_CELL)):
                 _n_exits += 1
 
-func map_to_world(pos: Vector2) -> Vector2:
-    return _map.map_to_world(pos) + auto_offset
+func map_to_world(pos: Vector2, off: Vector2) -> Vector2:
+    return _map.map_to_world(pos) + off
 
-func world_to_map(pos: Vector2) -> Vector2:
-    return _map.world_to_map(pos - auto_offset)
+func world_to_map(pos: Vector2, off: Vector2) -> Vector2:
+    return _map.world_to_map(pos - off)
 
 func get_or_set_tile(pos: Vector2, dir: Vector2) -> int:
+    var n_exits: int = _n_exits
     var tile_pos: Vector2 = pos + dir
     var tile_idx: int = _map.get_cellv(tile_pos)
     var tile_exists: bool = (tile_idx != TileMap.INVALID_CELL)
-    var n_exits: int = _n_exits
     if not tile_exists:
         var rand_tile := _rand_tile(tile_pos)
         tile_idx = rand_tile[0]
@@ -70,8 +71,26 @@ func get_or_set_tile(pos: Vector2, dir: Vector2) -> int:
         _n_exits = n_exits
     return tile_idx
 
+func add_heart(exclude_pos: Array):
+    var cells: Array = _map.get_used_cells()
+    var pos: Vector2 = cells[randi() % len(cells)]
+    if _hearts.has(pos) or (exclude_pos.find(pos) != -1):
+        return
+    var heart = Heart.instance()
+    heart.position = map_to_world(pos, heart.OFFSET)
+    _hearts[pos] = heart
+    add_child(heart)
 
-func has_tile(pos: Vector2, dir: Vector2) -> bool:
+func delete_heart(pos: Vector2) -> bool:
+    var heart: Heart = _hearts.get(pos)
+    if heart == null:
+        return false
+    heart.queue_free()
+    if not _hearts.erase(pos):
+        printerr(_hearts, "erase", pos)
+    return true
+
+func has_road(pos: Vector2, dir: Vector2) -> bool:
     return get_or_set_tile(pos, dir) > 0
 
 func has_exits() -> bool:
